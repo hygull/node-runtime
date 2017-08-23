@@ -2,7 +2,7 @@
 	{
 		"date_of_creation": "23 August 2017",
 		"aim_of_source": 'Creating a simple http server',
-		"coded_by": 'Rishikesh Agrawani'
+		"coded_by": 'Rishikesh Agrawani',
 		"output_link": "images/set1myserver2017-08-23at7.23.27 PM.png"
 	}
 */
