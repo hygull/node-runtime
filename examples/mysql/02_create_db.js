@@ -1,12 +1,9 @@
 /**
 	{
 		"date_of_creation": "17 August 2017",
-		"aim_of_source": 'Testing database(mysql) connection in node.js',
+		"aim_of_source": 'Creating database(mysql) using node.js',
 		"coded_by": 'Rishikesh Agrawani',
-		"output_img_links": "[
-							'0002mysql01connection2017-09-17at4.06.03PM.png',
-							'0003mysql01connection2017-09-17at4.07.51PM.png'
-						]"
+		"output_img_link": "0004mysql02createdb2017-09-17at4.41.57PM.png"
 	}
 */
 
@@ -20,13 +17,13 @@ var port = 8080
 
 //HTML text to display on the browser
 var htmlText = "<center>"+
-				"<h1 style='color:green'> Connection established </h1>"+
+				"<h1 style='color:green'> Connection established and created new database(if it was not there)</h1>"+
 				"<a href='https://nodejs.org/en/'>Click here</a> to download"+
 				"</center>"
 
 //HTML erro text to display on the browser
 var htmlErrorText = "<center>"+
-				"<h1 style='color:red'> Error while creating db connection</h1>"+
+				"<h1 style='color:red'> Error while accessing db</h1>"+
 				"<a href='https://nodejs.org/en/'>Click here</a> to download"+
 				"</center>"
 
@@ -54,6 +51,23 @@ server = http.createServer(
 						//Successful
 						response.writeHead(200, {"Content-Type":"text/html"})
 						console.log("Connection successful")
+						console.log("Now creating database")
+
+						//Creating database
+						connection.query("CREATE DATABASE IF NOT EXISTS nodejs", function(err){
+							if(err){
+								//Error
+								response.writeHead(500, {"Content-Type":"text/html"})
+								console.log("Error while creating database")
+								response.end(htmlErrorText)
+							} else {
+								//Successful
+								response.writeHead(200, {"Content-Type":"text/html"})
+								console.log("Database creation successful(if it was not there) otherwise it got skipped")
+								response.end(htmlText)
+							}
+						})
+
 						response.end(htmlText)
 					}
 				})
@@ -66,6 +80,3 @@ server.listen(port)
 //Printing log messages
 console.log("Server started which is listening on port 8080")
 console.log("Visit at http://127.0.0.1:"+port)
-
-
-
