@@ -1,7 +1,7 @@
 /**
 	{
-		"date_of_creation": "23 August 2017",
-		"aim_of_source": 'Creating a simple http server',
+		"date_of_creation": " August 2017",
+		"aim_of_source": '',
 		"coded_by": 'Rishikesh Agrawani',
 	}
 */
@@ -22,7 +22,7 @@ var htmlText = "<center>"+
 //Printing simple log message
 console.log("Starting Node server")
 
-//Creating server
+//Creting server
 server = http.createServer(
 			function(request, response){
 				response.writeHead(200, {"Content-Type":"text/html"})
