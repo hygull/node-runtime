@@ -24,7 +24,7 @@ console.log("Starting Node server")
 
 //Creting server
 server = http.createServer(
-			function(requset, response){
+			function(request, response){
 				response.writeHead(200, {"Content-Type":"text/html"})
 				response.end(htmlText)
 			}
