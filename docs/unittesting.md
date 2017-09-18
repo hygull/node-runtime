@@ -2,13 +2,13 @@
 
 Visit [official webiste](https://mochajs.org/)
 
-# Chai - insertion library
+# Chai - assertion library
 
 Visit [official webiste](http://chaijs.com/)
 
 **Chai** is optional, as node.js has assertion library by default
 
-visit [here](http://chaijs.com/api/assert/) to check **Chai Assertion library**
+Visit [here](http://chaijs.com/api/assert/) to check **Chai Assertion library**
 
 # How to do
 
@@ -18,9 +18,25 @@ visit [here](http://chaijs.com/api/assert/) to check **Chai Assertion library**
 
 *	npm init 
 
-Give simple description, author name etc, specify app.js as root, then accept defaults
+```
+	Give simple description, author name etc, specify app.js as root, then accept defaults
+```
 
 *	npm install mocha chai --save-dev
+
+*	Change the value of 'test' key to 'mocha' in package.json
+
+```
+	{
+		...
+		...
+		"scripts": {
+		    "test": "mocha"
+		  }
+		...
+		...
+	}
+```
 
 *	Create app.js
 
@@ -29,7 +45,9 @@ Give simple description, author name etc, specify app.js as root, then accept de
 *	Create test/appTesting.js
 
 ```javascript
-/* app.js */
+/* 
+	app.js 
+*/
 
 module.exports = function(){
 	return "Hello coders"
@@ -38,7 +56,9 @@ module.exports = function(){
 
 
 ```javascript
-/* test/appTesting.js */
+/* 
+	test/appTesting.js 
+*/
 
 const assert = require("chai").assert;
 
@@ -52,7 +72,7 @@ describe("Hello App", function(){
 ```
 
 
-*	Finally run **npm run test** from test1 folder
+*	Finally run **npm run test** from **test1** folder
 
 ```typescript
 MacBook-Pro-2:test1 admin$ npm run test
@@ -71,10 +91,12 @@ MacBook-Pro-2:test1 admin$ npm run test
 MacBook-Pro-2:test1 admin$ 
 ```
 
-*	Now change the code of appTesting.js
+*	Now change the code of **appTesting.js**
 
 ```typescript
-/* test/appTesting.js */
+/* 
+	test/appTesting.js 
+*/
 
 const assert = require("chai").assert;
 
@@ -139,3 +161,93 @@ npm ERR! A complete log of this run can be found in:
 npm ERR!     /Users/admin/.npm/_logs/2017-09-18T18_22_36_998Z-debug.log
 MacBook-Pro-2:test1 admin$  
 ```
+
+Try **npm run test -s**, you won't be able to see ERR messages like the above one
+
+Better is to not do like this.
+
+```
+MacBook-Pro-2:test1 admin$ npm run test -s
+
+
+  Hello App
+    ✓ It should return 'Hello coders'
+
+  Hello App
+    1) It should return 'Hello coders'
+
+
+  1 passing (8ms)
+  1 failing
+
+  1) Hello App It should return 'Hello coders':
+
+      AssertionError: expected 'Hello coders' to equal 'Hello doctors'
+      + expected - actual
+
+      -Hello coders
+      +Hello doctors
+      
+      at Context.<anonymous> (test/appTesting.js:15:11)
+
+
+
+MacBook-Pro-2:test1 admin$ 
+```
+
+Now again change the value of 'test' key to 'mocha || true'
+
+```
+	{
+		...
+		...
+		"scripts": {
+		    "test": "mocha || true"
+		  }
+		...
+		...
+	}
+```
+
+Then run **npm run test**
+
+```
+MacBook-Pro-2:test1 admin$ npm run test
+
+> test1@1.0.0 test /Users/admin/projects/Node/node-runtime/unittest/mocha/test1
+> mocha || true
+
+
+
+  Hello App
+    ✓ It should return 'Hello coders'
+
+  Hello App
+    1) It should return 'Hello coders'
+
+
+  1 passing (8ms)
+  1 failing
+
+  1) Hello App It should return 'Hello coders':
+
+      AssertionError: expected 'Hello coders' to equal 'Hello doctors'
+      + expected - actual
+
+      -Hello coders
+      +Hello doctors
+      
+      at Context.<anonymous> (test/appTesting.js:15:11)
+
+
+
+MacBook-Pro-2:test1 admin$ 
+```
+
+**Almost same, Right!!!**
+
+**Let's move on**
+
+
+
+
