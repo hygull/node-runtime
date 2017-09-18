@@ -1,0 +1,15 @@
+{
+  "name": "test1",
+  "version": "1.0.0",
+  "description": "Unit test",
+  "main": "app.js",
+  "scripts": {
+    "test": "Mocha"
+  },
+  "author": "Rishikesh Agrawani",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  }
+}
