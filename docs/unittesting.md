@@ -80,17 +80,22 @@ const assert = require("chai").assert;
 
 const app = require("../app")
 
-var messages = ["Hello coders", "Hello programmers"]
 
-for(var message of messages)
-	describe("Hello App", function(){
+
+describe("Hello App", function(){
 		it("It should return 'Hello coders'", function(){
-			assert.equal(app(), message)
+			assert.equal(app(), "Hello coders")
 		})
-	})
+})
+
+describe("Hello App", function(){
+		it("It should return 'Hello coders'", function(){
+			assert.equal(app(), "Hello doctors")
+		})
+})
 ```
 
-*	Then again run like below
+*	Then again **run** like below
 
 ```typescript
 MacBook-Pro-2:test1 admin$ npm run test
@@ -101,46 +106,36 @@ MacBook-Pro-2:test1 admin$ npm run test
 
 
   Hello App
-    1) It should return 'Hello coders'
+    ✓ It should return 'Hello coders'
 
   Hello App
-    2) It should return 'Hello coders'
+    1) It should return 'Hello coders'
 
 
-  0 passing (9ms)
-  2 failing
+  1 passing (8ms)
+  1 failing
 
   1) Hello App It should return 'Hello coders':
 
-      AssertionError: expected 'Hello coders' to equal 'Hello programmers'
+      AssertionError: expected 'Hello coders' to equal 'Hello doctors'
       + expected - actual
 
       -Hello coders
-      +Hello programmers
+      +Hello doctors
       
-      at Context.<anonymous> (test/appTesting.js:10:11)
-
-  2) Hello App It should return 'Hello coders':
-
-      AssertionError: expected 'Hello coders' to equal 'Hello programmers'
-      + expected - actual
-
-      -Hello coders
-      +Hello programmers
-      
-      at Context.<anonymous> (test/appTesting.js:10:11)
+      at Context.<anonymous> (test/appTesting.js:15:11)
 
 
 
 npm ERR! code ELIFECYCLE
-npm ERR! errno 2
+npm ERR! errno 1
 npm ERR! test1@1.0.0 test: `Mocha`
-npm ERR! Exit status 2
+npm ERR! Exit status 1
 npm ERR! 
 npm ERR! Failed at the test1@1.0.0 test script.
 npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
 
 npm ERR! A complete log of this run can be found in:
-npm ERR!     /Users/admin/.npm/_logs/2017-09-18T18_15_55_279Z-debug.log
-MacBook-Pro-2:test1 admin$ 
+npm ERR!     /Users/admin/.npm/_logs/2017-09-18T18_22_36_998Z-debug.log
+MacBook-Pro-2:test1 admin$  
 ```
