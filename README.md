@@ -1,6 +1,6 @@
 # Node.js - A powerful Javascript runtime/framework/platform
 
-Check [here](./docs/unittesting.md) for mocha(unit testing framework), chai(assertion library) etc.
+Check my excellent documentation [here](./docs/unittesting.md) for **mocha**(unit testing framework), **chai**(assertion library) etc.
 
 Check a great wiki [here](https://github.com/hygull/node-runtime/wiki)
 

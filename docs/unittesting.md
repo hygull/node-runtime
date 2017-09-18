@@ -162,7 +162,7 @@ npm ERR!     /Users/admin/.npm/_logs/2017-09-18T18_22_36_998Z-debug.log
 MacBook-Pro-2:test1 admin$  
 ```
 
-Try **npm run test -s**, you won't be able to see ERR messages like the above one
+Try **npm run test -s**, you won't be able to see **ERR** messages like the above one
 
 Better is to not do like this.
 
@@ -195,7 +195,7 @@ MacBook-Pro-2:test1 admin$ npm run test -s
 MacBook-Pro-2:test1 admin$ 
 ```
 
-Now again change the value of 'test' key to 'mocha || true'
+Now again change the value of **'test'** key to **'mocha || true'**
 
 ```
 	{
@@ -246,7 +246,34 @@ MacBook-Pro-2:test1 admin$
 
 **Almost same, Right!!!**
 
-**Let's move on**
+**Let's move on!!!**
+
+# TODO
+
+```
+typeOf()
+
+isAbove()
+
+equal()
+```
+
+# WHAT I HAVE TO FOLLOW
+
+```javascript
+	var app = require("../app").sum
+```
+
+```javascript
+	var app = require("../app")
+
+	var s = app.sum()
+```
+
+```
+	var result = sum()
+```
+
 
 
 
