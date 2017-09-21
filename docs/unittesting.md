@@ -412,6 +412,55 @@ Finally run **npm run test**, you will see **output** something like below(Do no
 
 ```
 
+# Examples
+
+```
+/* test/data-testing.js */
+
+var assert = require("chai").assert
+var expect = require("chai").expect
+
+describe("Testing data and their types", function(){
+	it("number type test for 4 - done", function(){ 
+		assert.typeOf(4, "number", "4 is of type integer")
+	})
+
+	it("number type test for 4.67 - done", function(){ 
+		assert.typeOf(4.67, "number", "4.67 is of type integer")
+	})
+
+	it("object type test for {name: 'Let Us C'} - done", function(){ 
+		assert.typeOf({name: 'Let Us C'}, "object", "4 is of type integer")
+	})
+
+	it("object type test for [1, 3, 4] - done", function(){ 
+		expect([1, 3, 4]).to.be.a("array")
+	})
+})
+```
+
+run **npm run test**
+
+```
+MacBook-Pro-2:test3-object admin$ npm run test
+
+> test3-object@1.0.0 test /Users/admin/projects/Node/node-runtime/unittest/mocha/test3-object
+> mocha
+
+
+
+  Testing data and their types
+    ✓ number type test for 4 - done
+    ✓ number type test for 4.67 - done
+    ✓ object type test for {name: 'Let Us C'} - done
+    ✓ object type test for [1, 3, 4] - done
+
+
+  4 passing (7ms)
+
+
+```
+
 # TODO
 
 ```
@@ -424,6 +473,10 @@ equal()
 isUndefined()
 
 isDefined()
+
+isObject()
+
+isNumber()
 ```
 
 # WHAT I HAVE TO FOLLOW
