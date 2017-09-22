@@ -1,7 +1,7 @@
 /**
 	{
 		"date_of_creation": "22 Sept 2017",
-		"aim_of_source": 'Inserting data into table (mysql) using node.js',
+		"aim_of_source": 'Inserting data(rows) into table (mysql) using node.js',
 		"coded_by": 'Rishikesh Agrawani',
 	}
 */
@@ -20,7 +20,7 @@ var port = 8080
 
 //HTML text to display on the browser
 var htmlText = "<center>"+
-				"<h1 style='color:green'> Connection established and created new db & table(if it was not there) then inserted data</h1>"+
+				"<h1 style='color:green'> Connection established and created new db & table(if it was not there) then inserted datas(rows)</h1>"+
 				"<a href='https://nodejs.org/en/'>Click here</a> to download"+
 				"</center>"
 
@@ -91,30 +91,36 @@ server = http.createServer(
 											response.end(htmlText)
 
 											//Inserting data into table
-											let q = "INSERT INTO users(fullname, email, contact, password, address) VALUES('Rob Pike', 'rob.pike@gmail.com', '802567567', 'rob@321', 'Nagpur, INDIA')"
-											connection.query(q, function(err, result){
+											let q = "INSERT INTO users(fullname, email, contact, password, address) VALUES ?"
+											var users = [
+												['Robert Griesemer', 'robert.griesemer@gmail.com','7877093454', 'robert@321', 'Gurgaon, INDIA'],
+												['Ken Thompson', 'ken.thompson@gmail.com','7977093114', 'ken@321', 'Hyderabad, INDIA'],
+												['Dennis Ritchie', 'dennis.ritchie@gmail.com','7832092454', 'dennis@321', 'Faridabad, INDIA'],
+											]
+
+											connection.query(q, [users] ,function(err, result){
 												
 												if(err){
 													//Error
 													response.writeHead(500, {"Content-Type":"text/html"})
-													console.log("Error while inserting data into users table")
+													console.log("Error while inserting data(3 rows) into users table")
 													response.end(htmlErrorText+"<br><center><span style='color:black; font-weight:bold'>"+err+"</span></center>")
 												}else{
 													//Successful
-													console.log(result)
 													/*
-														Packet {
-														  fieldCount: 0,
-														  affectedRows: 1,
-														  insertId: 3,
-														  serverStatus: 2,
-														  warningCount: 0,
-														  message: '',
-														  protocol41: true,
-														  changedRows: 0 }
+													console.log(result)
+													Packet {
+													  fieldCount: 0,
+													  affectedRows: 3,
+													  insertId: 4,
+													  serverStatus: 2,
+													  warningCount: 0,
+													  message: '&Records: 3  Duplicates: 0  Warnings: 0',
+													  protocol41: true,
+													  changedRows: 0 }
 													*/
 													response.writeHead(200, {"Content-Type":"text/html"})
-													console.log("Insertion successful")
+													console.log("Rows insertion successful")
 													response.end(htmlText)
 												}
 											})

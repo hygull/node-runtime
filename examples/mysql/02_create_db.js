@@ -1,6 +1,6 @@
 /**
 	{
-		"date_of_creation": "17 August 2017",
+		"date_of_creation": "17 Sepember 2017",
 		"aim_of_source": 'Creating database(mysql) using node.js',
 		"coded_by": 'Rishikesh Agrawani',
 		"output_img_link": "0004mysql02createdb2017-09-17at4.41.57PM.png"

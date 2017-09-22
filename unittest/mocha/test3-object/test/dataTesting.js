@@ -18,5 +18,3 @@ describe("Testing data and their types", function(){
 		expect([1, 3, 4]).to.be.a("array")
 	})
 })
-
-

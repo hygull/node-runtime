@@ -1,6 +1,6 @@
 /**
 	{
-		"date_of_creation": "17 August 2017",
+		"date_of_creation": "17 September 2017",
 		"aim_of_source": 'Testing database(mysql) connection in node.js',
 		"coded_by": 'Rishikesh Agrawani',
 		"output_img_links": "[
