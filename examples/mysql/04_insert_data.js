@@ -11,12 +11,15 @@ var http = require("http")
 //Including mysql module(mysql node.js driver)
 var mysql = require("mysql")
 
+//Importing Databas credentials
+var config = require("./config/mysql-config.js")
+
 //Setting port
 var port = 8080
 
 //HTML text to display on the browser
 var htmlText = "<center>"+
-				"<h1 style='color:green'> Connection established and created new table(if it was not there)</h1>"+
+				"<h1 style='color:green'> Connection established and created new db & table(if it was not there) then inserted data</h1>"+
 				"<a href='https://nodejs.org/en/'>Click here</a> to download"+
 				"</center>"
 
@@ -36,10 +39,10 @@ server = http.createServer(
 				if(request.url != "/favicon.ico"){
 					//Creating connection object
 					var connection = mysql.createConnection({
-						host: "localhost",	
-						"user": "rishikesh",	//db username
-						"password": "rishikesh@321",	//db password
-						"database": "nodejs"	//db name if it exists(otherwise create it)
+						"host": config.dbhost,	
+						"user": config.dbuser,	//db username
+						"password": config.dbpassword,	//db password
+						"database": config.dbname	//db name if it exists(otherwise create it)
 					})
 
 					//Creating and testing database connection
@@ -85,6 +88,22 @@ server = http.createServer(
 											response.writeHead(200, {"Content-Type":"text/html"})
 											console.log("Table creation successful(if it was not there) otherwise it got skipped")
 											response.end(htmlText)
+
+											//Inserting data into table
+											let q = "INSERT INTO users(fullname, email, contact, password, address) VALUES('Misko Hevery', 'misko.hevery@gmail.com', '802309567', 'misko@321', 'Delhi, INDIA')"
+											connection.query(q, function(err, data){
+												//Error
+												if(err){
+													response.writeHead(500, {"Content-Type":"text/html"})
+													console.log("Error while inserting data into users table")
+													response.end(htmlErrorText+"<br><center><span style='color:black; font-weight:bold'>"+err+"</span></center>")
+												}else{
+													//Successful
+													response.writeHead(200, {"Content-Type":"text/html"})
+													console.log("Insertion successful")
+													response.end(htmlText)
+												}
+											})
 										}
 									})
 								}
@@ -93,8 +112,8 @@ server = http.createServer(
 					})
 				}//if closed(request.url)
 				else{
-					// console.log("fhfhf ndndn dhdhhd")
-					response.end(htmlText + "<br><center>Now browser is requesting for /favicon.ico</center>")
+					// response.end(htmlText + "<br><center>Now browser is requesting for /favicon.ico</center>")
+					console.log("Your browser internally requested /favicon.ico")
 				}
 			}
 		)
