@@ -1,3 +1,4 @@
+```
 var express = require("express")
 
 var app = express()
@@ -6,16 +7,13 @@ var mysql = require("mysql")
 
 var config = require("./config/mysql-config.js")
 
-var connection = mysql.createConnection({
+app.get("/users/", function(request, response){
+	var connection = mysql.createConnection({
 		database: config.dbname,
 		user: config.dbuser,
 		password: config.dbpassword,
 		host: config.dbhost,
-})
-
-//GET ALL USERS
-app.get("/users/", function(request, response){
-	
+	})
 /*
 	mysql> SELECT * FROM users;
 	+----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+
@@ -41,37 +39,7 @@ app.get("/users/", function(request, response){
 	})
 })
 
-
-app.get("/users/:userId", function(request, response){
-	var  userId = request.params.userId
-	console.log(typeof userId)
-
-	connection.query("SELECT * from users where id="+userId, function(err, data){
-		if(err){
-			response.writeHead(500, {"Content-Type": "application/json"})
-			response.end(JSON.stringify({message: "Server Error", "status": 500}))
-		} 
-		var newUser = {}
-		for (let user of data){
-			console.log("User: ", user)
-			newUser = user
-			break
-		}
-		response.writeHead(200, {"Content-Type": "application/json"})
-		response.end(JSON.stringify(newUser))
-	})
-})
-
-
-app.get("/", function(request, response){
-	var fs = require("fs")
-
-	fs.readFile("./home.html", function(err, data){
-		response.writeHead(200, {"Content-Type": "text/html"})
-		response.end(data)
-	})
-})
-
 var server = app.listen(8080, function(){
 	console.log("Server is running")
 })
+```
