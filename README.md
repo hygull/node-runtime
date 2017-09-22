@@ -14,8 +14,8 @@ Check [01_connection.js](./examples/mysql/01_connection.js) - Testing db connect
 
 Check [02_create_db.js](./examples/mysql/02_create_db.js) - Creating database
 
-Check [02_create_table.js](./examples/mysql/03_create_table.js) - Creating table
+Check [03_create_table.js](./examples/mysql/03_create_table.js) - Creating table
 
-Check [02_insert_data.js](./examples/mysql/04_insert_data.js) - Inserting data(1 row)
+Check [04_insert_data.js](./examples/mysql/04_insert_data.js) - Inserting data(1 row)
 
 Check [05_insert_multiple_data.js](./examples/mysql/05_insert_multiple_data.js) - Inserting data(multiple rows)
