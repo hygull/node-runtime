@@ -16,4 +16,10 @@ var config = {
 	"dbhost": DB_HOST,
 }
 
+//root subpath for endpoints
+var ROOT = "/api"
+
+config.root = ROOT
+
+//Export now
 module.exports = config

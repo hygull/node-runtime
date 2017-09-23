@@ -32,25 +32,24 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">DevOps</a></li>
-                <li><a href="#">YtEdit</a></li>
-                <li><a href="#">GWeather</a></li>
+                <li><a href="/qAlarm/details/">qAlarm &raquo;</a></li>
+                <li><a href="/YtEdit/details/">YtEdit &raquo;</a></li>
+                <li><a href="/GWeather/details/">GWeather &raquo;</a></li>
                 <li role="separator" class="divider"></li>
-         
-                <li><a href="#">HealthGuard</a></li>
-                <li><a href="#">ByDonk</a></li>
+                <li><a href="/WadStore/details/">WadStore &raquo;</a></li>
+                <li><a href="/chatsAll/details/">chatsAll</a></li>
               </ul>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Login</a></li>
-            <li><a href="../navbar-static-top/">Register</a></li>
-            <li><a href="./">App<span class="sr-only">(current)</span></a></li>
+            <li><a href="/login/">Login</a></li>
+            <li><a href="/register/">Register</a></li>
+            <li><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
           </ul>
         </div>
       </div>
@@ -68,11 +67,12 @@
 			</div>
 		</div>
 
-		<div class="row" ng-repeat="user in users">
-		  <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+		<div class="row" >
+      <!--ITERATING USERS LIST-->
+		  <div class="col-sm-6 col-md-4" ng-repeat="user in users">
 		    <div class="thumbnail">
 		      <center>
-		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - {{user.fullname}}" class="img-responsive" style="width: 100px">
+		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - {{user.fullname}}" class="img-responsive img-circle" style="width: 100px">
 		      	<hr>
 		      </center>
 		      <div class="caption">
@@ -81,18 +81,31 @@
 			        <p>{{user.email}}</p>
 			        <p>+91 {{user.contact}}</p>
 			        <p>{{user.address}}</p>
-			    </center>
+			       </center>
 		      </div>
+          <div class="caption">
+              <a href="/users/delete/{{user.id}}/" role="button" class="btn btn-danger btn-block">DELETE</a>
+              <a href="/users/update/{{user.id}}/" role="button" class="btn btn-success btn-block">UPDATE</a>
+          </div>
 		    </div>
 		  </div>
+
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <a href="/regiser/">
+           <img src="https://cdn0.iconfinder.com/data/icons/basic-ui-elements-plain/485/07_plus-512.png" alt="Register Image" class="img-responsive img-circle" style="width: 100%">
+          </a>
+        </div>
+      </div>
 		</div>
+    <!--ROW ENDS-->
 </div>
 
 <script>
 	var app = angular.module('hyperCrudApp', []);
 
 	app.controller('usersCtrl', function($scope, $http) {
-	  $http.get("http://127.0.0.1:8080/users/").then(function (response) {
+	  $http.get("http://127.0.0.1:8080/api/users/").then(function (response) {
 
 	  	  console.log(response.data)
 
@@ -101,14 +114,11 @@
 	});
 </script>
 
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
 </body>
 </html>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-</head>
-<body>
-

@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
 })
 
 //GET ALL USERS
-app.get("/users/", function(request, response){
+app.get(config.root+"/users/", function(request, response){
 	
 /*
 	mysql> SELECT * FROM users;
@@ -42,7 +42,7 @@ app.get("/users/", function(request, response){
 })
 
 
-app.get("/users/:userId", function(request, response){
+app.get(config.root+"/users/:userId", function(request, response){
 	var  userId = request.params.userId
 	console.log(typeof userId)
 
