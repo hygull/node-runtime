@@ -27,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">HyperCrud</a>
+          <a class="navbar-brand" href="/">HyperCrud</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -84,8 +84,8 @@
 			       </center>
 		      </div>
           <div class="caption">
-              <a href="/users/delete/{{user.id}}/" role="button" class="btn btn-danger btn-block">DELETE</a>
-              <a href="/users/update/{{user.id}}/" role="button" class="btn btn-success btn-block">UPDATE</a>
+              <a href="/users/delete/{{user.id}}/" role="button" class="btn btn-danger btn-block" ng-click="setKey(user.id)">DELETE</a>
+              <a href="/users/update/{{user.id}}/" role="button" class="btn btn-success btn-block" ng-click="setKey(user.id)">UPDATE</a>
           </div>
 		    </div>
 		  </div>
@@ -106,10 +106,18 @@
 
 	app.controller('usersCtrl', function($scope, $http) {
 	  $http.get("http://127.0.0.1:8080/api/users/").then(function (response) {
-
 	  	  console.log(response.data)
 
 	      $scope.users = response.data;
+        $scope.setKey = function (userId){
+            // alert(userId)
+            if(localStorage){
+              localStorage.setItem("userId", userId)
+            } else {
+              alert("No support of localStorage")
+              return
+            }
+        }//function closed  
 	  });
 	});
 </script>
