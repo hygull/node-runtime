@@ -94,7 +94,7 @@ app.get("/", function(request, response){
 // for parsing application/json
 app.use(bodyParser.json()); 
 
-app.post(config.root+"/users/:userId", function(request, response){
+app.put(config.root+"/users/:userId", function(request, response){
 	var  userId = request.params.userId
 
 	if( !/^\d+$/.test(userId)){

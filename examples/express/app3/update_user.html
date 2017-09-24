@@ -77,7 +77,7 @@
 		      </center>
 		      <div class="caption" >
 		      	  <!--FORM STARTS-->
-                <form action="" method="POST" ng-submit="updateUser()" name="updateForm">
+                <form action="" method="PUT" ng-submit="updateUser()" name="updateForm">
                   <div class="form-group">
                     <label for="fullname">Fullname</label>
                     <input type="text" class="form-control" id="fullname" placeholder="Update your fullname" name="fullname" value="{{user.fullname}}" required="true" autofocus="true">
@@ -158,11 +158,12 @@
               
               $http({
                 url: "/api/users/"+userId, 
-                method: "POST",
+                method: "PUT",
                 
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                   },
 
                 data: data
