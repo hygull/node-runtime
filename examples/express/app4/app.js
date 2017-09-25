@@ -12,6 +12,8 @@ var app = express()
 
 var mysql = require("mysql")
 
+var port = 8080
+
 var fs = require("fs")
 
 var bodyParser = require("body-parser")
@@ -89,6 +91,13 @@ app.get("/", function(request, response){
 	})
 })
 
+app.get("/users/delete/:userId", function(request, response){
+	fs.readFile("./delete_user.html", function(err, data){
+		response.writeHead(200, {"Content-Type": "text/html"})
+		response.end(data)
+	})
+})
+
 
 // app.use(bodyParser.urlencoded({extended:true}))
 // for parsing application/json
@@ -99,6 +108,7 @@ app.put(config.root+"/users/:userId", function(request, response){
 
 	if( !/^\d+$/.test(userId)){
 		response.json({"status": 400, "message": "userId should be an integer"})
+		return
 	}
 
 	var data = request.body
@@ -147,7 +157,37 @@ app.put(config.root+"/users/:userId", function(request, response){
 	}	
 })
 
+//Deleting users, I am not supposed to delete users just deactivate them
+app.delete(config.root + "/users/:userId", function(request, response){
+	var  userId = request.params.userId
+
+	if( !/^\d+$/.test(userId)){
+		response.status(400)
+		response.json({"status": 400, "message": "userId should be an integer"})
+		return
+	}
+
+	var query = "UPDATE users SET is_active=0 WHERE id="+userId+";"
+	console.log("Deleting " + userId)
+	console.log(query)
+
+	connection.query(query, function(err, result){
+		if(err){
+			response.status(500);
+			console.log(500);
+			response.json({"status": 500, "message": "Server Error"});
+			return
+		} else {
+			response.status(200);
+			console.log(result);
+			response.json({"status": 200, "message": "User successfully deactivated"});
+		}
+	})
+})
+
+
+
 //Start Server 
-var server = app.listen(8080, function(){
-	console.log("Server is running")
+var server = app.listen(port, function(){
+	console.log("Server is running " + port)
 })
