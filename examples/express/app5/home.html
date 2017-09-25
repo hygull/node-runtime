@@ -14,10 +14,6 @@
   			color: green;
   			font-weight: bold;
   		}
-      #sub-header {
-        color: gray;
-        font-weight: bold;
-      }
   </style>
 </head>
 <body>
@@ -49,6 +45,7 @@
                 <li><a href="/chatsAll/details/">chatsAll</a></li>
               </ul>
             </li>
+            <li><a href="/users/deactivated">DUsers</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/login/">Login</a></li>
@@ -65,75 +62,65 @@
 <div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
-        <br>
 				<center>
-            <img src="https://www.alisteducation.com/wp-content/uploads/2012/06/delete.png" style="width:100px">
-						<h1 id="header"> Deactivate Now</h1>
-            
-            <h4 id="sub-header">Do you want to deactivate this user?</h4>
-            <h4 id="sub-header">You can recover this later</h4>
+						<h1 id="header"> Users </h1>
 				</center>
 			</div>
 		</div>
 
 		<div class="row" >
       <!--ITERATING USERS LIST-->
-		  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-		        <button role="button" class="btn btn-danger btn-block" ng-click="deleteUser()">Confirm</button><br>
-            <a href="/" role="button" class="btn btn-info btn-block">Cancel</a>
+		  <div class="col-md-4 col-sm-6" ng-repeat="user in users">
+		    <div class="thumbnail">
+		      <center>
+		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - {{user.fullname}}" class="img-responsive img-circle" style="width: 100px">
+		      	<hr>
+		      </center>
+		      <div class="caption">
+		      	<center>
+			        <h3>{{user.fullname}}</h3>
+			        <p>{{user.email}}</p>
+			        <p>+91 {{user.contact}}</p>
+			        <p>{{user.address}}</p>
+			       </center>
+		      </div>
+          <div class="caption">
+              <a href="/users/delete/{{user.id}}/" role="button" class="btn btn-danger btn-block" ng-click="setKey(user.id)">DELETE</a>
+              <a href="/users/update/{{user.id}}/" role="button" class="btn btn-success btn-block" ng-click="setKey(user.id)">UPDATE</a>
+          </div>
+		    </div>
 		  </div>
+
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <a href="/regiser/">
+           <img src="http://img.bhs4.com/b7/b/b7b76402439268b532e3429b3f1d1db0b28651d5_large.jpg" alt="Register Image" class="img-responsive img-circle" style="width: 100%">
+          </a>
+        </div>
+      </div>
 		</div>
     <!--ROW ENDS-->
 </div>
 
 <script>
-	  var app = angular.module('hyperCrudApp', []);
+	var app = angular.module('hyperCrudApp', []);
 
-	  app.controller('usersCtrl', function($scope, $http) {
-        var userId = 0;
+	app.controller('usersCtrl', function($scope, $http) {
+	  $http.get("/api/users/").then(function (response) {
+	  	  console.log(response.data)
 
-        if(localStorage){
-          try {
-            userId = localStorage.getItem("userId")  //$userId is not supported as variable name
+	      $scope.users = response.data;
+        $scope.setKey = function (userId){
             // alert(userId)
-          } catch(err) {
-              alert("Something unexpected happened, "+err)
-              return 
-          }
-        } else {
-          alert("No support of localStorage")
-          return
-        }
-        
-        $scope.userId = userId
-
-        $scope.deleteUser = function(){
-            event.preventDefault()
-              
-              $http({
-                url: "/api/users/"+userId, 
-                method: "DELETE",
-                
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
-              }).then(
-                function(response){
-                  if(response.status == 200){
-                      alert(response.data.message);
-                      location.href = "/";                 }
-                },
-
-                function(error){
-                  alert(error.message)
-                }
-              )
-          }
+            if(localStorage){
+              localStorage.setItem("userId", userId)
+            } else {
+              alert("No support of localStorage")
+              return
+            }
+        }//function closed  
+	  });
 	});
 </script>
 </body>
 </html>
-
-

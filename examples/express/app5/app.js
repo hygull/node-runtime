@@ -27,7 +27,7 @@ var connection = mysql.createConnection({
 		host: config.dbhost,
 })
 
-//GET ALL USERS
+//GET ALL ACTIVE USERS
 app.get(config.root+"/users/", function(request, response){
 	
 /*
@@ -45,7 +45,9 @@ mysql> SELECT * FROM users;
 5 rows in set (0.00 sec)
 
 */
-	connection.query("SELECT * FROM users WHERE is_active=1;", function(err, data){
+
+//Get all active users
+connection.query("SELECT * FROM users WHERE is_active=1;", function(err, data){
 		if(err){
 			response.writeHead(500, {"Content-Type": "application/json"})
 			response.end(JSON.stringify({message: "Server Error", "status": 500}))
@@ -54,6 +56,38 @@ mysql> SELECT * FROM users;
 		response.end(JSON.stringify(data))
 	})
 })
+
+
+//GET ALL DEACTIVATED USERS
+app.get(config.root+"/users/deactivated", function(request, response){
+	
+/*
+
+mysql> SELECT * FROM users;
++----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
+| id | fullname         | email                      | contact    | address          | password   | created_at          | updated_at          | is_active | is_admin |
++----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
+|  1 | Ryan Dahl        | ryan.dahl@gmail.com        | 7973134514 | Kondagaon, INDIA | ryan@321   | 2017-09-25 11:29:06 | 2017-09-25 15:23:55 |         1 |        0 |
+|  2 | Misko Hevery     | misko.heverygmail.com      | 7832017454 | Kanpur, INDIA    | misko@321  | 2017-09-25 11:29:06 | 2017-09-25 15:24:18 |         1 |        0 |
+|  3 | Robert Griesemer | robert.griesemer@gmail.com | 7877093454 | Gurgaon, INDIA   | robert@321 | 2017-09-25 11:29:06 | 2017-09-25 15:24:06 |         1 |        0 |
+|  4 | Ken Thompson     | ken.thompson@gmail.com     | 7977093114 | Hyderabad, INDIA | ken@321    | 2017-09-25 11:29:06 | 2017-09-25 15:24:27 |         1 |        0 |
+|  5 | Dennis Ritchie   | dennis.ritchie@gmail.com   | 7832092454 | Faridabad, INDIA | dennis@321 | 2017-09-25 11:29:06 | 2017-09-25 15:24:12 |         1 |        0 |
++----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
+5 rows in set (0.00 sec)
+
+*/
+
+//Get all active users
+connection.query("SELECT * FROM users WHERE is_active=0;", function(err, data){
+		if(err){
+			response.writeHead(500, {"Content-Type": "application/json"})
+			response.end(JSON.stringify({message: "Server Error", "status": 500}))
+		} 
+		response.writeHead(200, {"Content-Type": "application/json"})
+		response.end(JSON.stringify(data))
+	})
+})
+
 
 
 app.get(config.root+"/users/:userId", function(request, response){
@@ -65,7 +99,9 @@ app.get(config.root+"/users/:userId", function(request, response){
 			response.writeHead(500, {"Content-Type": "application/json"})
 			response.end(JSON.stringify({message: "Server Error", "status": 500}))
 		} 
-		var newUser = {}
+
+		var newUser = {};
+
 		for (let user of data){
 			console.log("User: ", user)
 			newUser = user
@@ -79,6 +115,13 @@ app.get(config.root+"/users/:userId", function(request, response){
 
 app.get("/users/update/:userId", function(request, response){
 	fs.readFile("./update_user.html", function(err, data){
+		response.writeHead(200, {"Content-Type": "text/html"})
+		response.end(data)
+	})
+})
+
+app.get("/users/deactivated", function(request, response){
+	fs.readFile("./deactivated_users.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
 		response.end(data)
 	})
@@ -186,6 +229,33 @@ app.delete(config.root + "/users/:userId", function(request, response){
 })
 
 
+//Deleting users, I am not supposed to delete users just deactivate them
+app.put(config.root + "/users/recover/:userId", function(request, response){
+	var  userId = request.params.userId
+
+	if( !/^\d+$/.test(userId)){
+		response.status(400)
+		response.json({"status": 400, "message": "userId should be an integer"})
+		return
+	}
+
+	var query = "UPDATE users SET is_active=1 WHERE id="+userId+";"
+	console.log("Recovering " + userId)
+	console.log(query)
+
+	connection.query(query, function(err, result){
+		if(err){
+			response.status(500);
+			console.log(500);
+			response.json({"status": 500, "message": "Server Error"});
+			return
+		} else {
+			response.status(200);
+			console.log(result);
+			response.json({"status": 200, "message": "User successfully activated"});
+		}
+	})
+})
 
 //Start Server 
 var server = app.listen(port, function(){
