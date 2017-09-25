@@ -75,7 +75,7 @@ server = http.createServer(
 											"fullname VARCHAR(50) NOT NULL, email text NOT NULL, contact VARCHAR(10) NOT NULL, "+
 											"address text DEFAULT NULL, password VARCHAR(20) NOT NULL, "+
 											"created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "+
-											"updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)"
+											"updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, is_active TINYINT(1) DEFAULT 1, is_admin TINYINT(1) DEFAULT 0);"
 
 									//Cretaing table 
 									connection.query(q, function(err){
@@ -93,13 +93,14 @@ server = http.createServer(
 											//Inserting data into table
 											let q = "INSERT INTO users(fullname, email, contact, password, address) VALUES ?"
 											var users = [
+												['Ryan Dahl', 'ryan.dahl@gmail.com','7973134514', 'ryan@321', 'Kondagaon, INDIA'],
+												['Misko Hevery', 'misko.heverygmail.com','7832017454', 'misko@321', 'Kanpur, INDIA'],
 												['Robert Griesemer', 'robert.griesemer@gmail.com','7877093454', 'robert@321', 'Gurgaon, INDIA'],
 												['Ken Thompson', 'ken.thompson@gmail.com','7977093114', 'ken@321', 'Hyderabad, INDIA'],
 												['Dennis Ritchie', 'dennis.ritchie@gmail.com','7832092454', 'dennis@321', 'Faridabad, INDIA'],
 											]
 
 											connection.query(q, [users] ,function(err, result){
-												
 												if(err){
 													//Error
 													response.writeHead(500, {"Content-Type":"text/html"})
@@ -107,18 +108,6 @@ server = http.createServer(
 													response.end(htmlErrorText+"<br><center><span style='color:black; font-weight:bold'>"+err+"</span></center>")
 												}else{
 													//Successful
-													/*
-													console.log(result)
-													Packet {
-													  fieldCount: 0,
-													  affectedRows: 3,
-													  insertId: 4,
-													  serverStatus: 2,
-													  warningCount: 0,
-													  message: '&Records: 3  Duplicates: 0  Warnings: 0',
-													  protocol41: true,
-													  changedRows: 0 }
-													*/
 													response.writeHead(200, {"Content-Type":"text/html"})
 													console.log("Rows insertion successful")
 													response.end(htmlText)
