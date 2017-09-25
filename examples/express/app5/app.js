@@ -1,7 +1,7 @@
 /**
 	{
-		"date_of_creation": "23 Sept 2017",
-		"aim_of_source": 'Performing GET/UPDATE using node.js',
+		"date_of_creation": "24 Sept 2017",
+		"aim_of_source": 'Performing GET/UPDATE/DEACTIVATE using node.js',
 		"coded_by": 'Rishikesh Agrawani',
 	}
 */

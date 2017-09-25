@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HyperCrud</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <style type="text/css">
+  		#header{
+  			color: green;
+  			font-weight: bold;
+  		}
+
+      #sub-header{
+        color: gray;
+        font-weight: bold;
+        display: none;
+      }
+      #nousers-image{
+        display: none;
+        color: green;
+      }
+  </style>
+</head>
+<body>
+ 	<!-- NAVBAR STARTS -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">HyperCrud</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/qAlarm/details/">qAlarm &raquo;</a></li>
+                <li><a href="/YtEdit/details/">YtEdit &raquo;</a></li>
+                <li><a href="/GWeather/details/">GWeather &raquo;</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/WadStore/details/">WadStore &raquo;</a></li>
+                <li><a href="/chatsAll/details/">chatsAll</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login/">Login</a></li>
+            <li><a href="/register/">Register</a></li>
+            <li><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--NAVBAR ENDS-->
+<br>
+<br>
+
+<div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<center>
+						<h1 id="header">Deactivated Users </h1>
+
+            <h1 id="sub-header">Currently there are no any deatcivated users</h1>
+            <img src="https://i0.wp.com/ebcallcenter.com/wp-content/uploads/Say-No-to-Your-Customers.jpg" class="img-responsive" id="nousers-image">
+            
+				</center>
+			</div>
+		</div>
+
+		<div class="row" >
+      <!--ITERATING USERS LIST-->
+		  <div class="col-md-4 col-sm-6" ng-repeat="user in users">
+		    <div class="thumbnail">
+		      <center>
+		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - {{user.fullname}}" class="img-responsive img-circle" style="width: 100px">
+		      	<hr>
+		      </center>
+		      <div class="caption">
+		      	<center>
+			        <h3>{{user.fullname}}</h3>
+			        <p>{{user.email}}</p>
+			        <p>+91 {{user.contact}}</p>
+			        <p>{{user.address}}</p>
+			       </center>
+		      </div>
+          <div class="caption">
+              <button role="button" class="btn btn-danger btn-block" ng-click="recoverUser(user.id)">RECOVER</button>
+              <a href="/users/update/{{user.id}}/" role="button" class="btn btn-success btn-block" ng-click="setKey(user.id)">UPDATE</a>
+          </div>
+		    </div>
+		  </div>
+		</div>
+    <!--ROW ENDS-->
+</div>
+
+<script>
+	var app = angular.module('hyperCrudApp', []);
+
+	app.controller('usersCtrl', function($scope, $http) {
+	  $http.get("/api/users/deactivated").then(function (response) {
+	  	  console.log(response.data)
+
+	      $scope.users = response.data;
+        if($scope.users.length == 0){
+            document.getElementById("sub-header").style.display = "block";
+            document.getElementById("nousers-image").style.display = "block";
+            document.getElementById("header").style.display = "none";
+        }
+
+        $scope.setKey = function (userId){
+            // alert(userId)
+            if(localStorage){
+              localStorage.setItem("userId", userId)
+            } else {
+              alert("No support of localStorage")
+              return
+            }
+        }//function closed 
+
+        $scope.recoverUser = function(userId){
+              $http({
+                url: "/api/users/recover/"+userId, 
+                method: "PUT",
+                
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                }
+              }).then(
+                function(response){
+                  if(response.status == 200){
+                      alert(response.data.message);
+                      location.href = "/";                 }
+                },
+
+                function(error){
+                  alert(error.message)
+                }
+              )
+        } 
+	  });
+	});
+</script>
+</body>
+</html>

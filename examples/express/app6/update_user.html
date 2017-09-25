@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HyperCrud</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <style type="text/css">
+  		#header{
+  			color: green;
+  			font-weight: bold;
+  		}
+  </style>
+</head>
+<body>
+ 	<!-- NAVBAR STARTS -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">HyperCrud</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/qAlarm/details/">qAlarm &raquo;</a></li>
+                <li><a href="/YtEdit/details/">YtEdit &raquo;</a></li>
+                <li><a href="/GWeather/details/">GWeather &raquo;</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/WadStore/details/">WadStore &raquo;</a></li>
+                <li><a href="/chatsAll/details/">chatsAll</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login/">Login</a></li>
+            <li><a href="/register/">Register</a></li>
+            <li><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--NAVBAR ENDS-->
+<br>
+<br>
+
+<div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<center>
+						<h1 id="header"> {{user.fullname}}</h1>
+				</center>
+			</div>
+		</div>
+
+		<div class="row" >
+      <!--ITERATING USERS LIST-->
+		  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+		    <div class="thumbnail">
+		      <center>
+		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - {{user.fullname}}" class="img-responsive img-circle" style="width: 100px">
+		      	<hr>
+		      </center>
+		      <div class="caption" >
+		      	  <!--FORM STARTS-->
+                <form action="" method="PUT" ng-submit="updateUser()" name="updateForm">
+                  <div class="form-group">
+                    <label for="fullname">Fullname</label>
+                    <input type="text" class="form-control" id="fullname" placeholder="Update your fullname" name="fullname" value="{{user.fullname}}" required="true" autofocus="true">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Update your email" name="email" value="{{user.email}}" required="true">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contact">Contact</label>
+                    <input type="contact" class="form-control" id="contact" placeholder="Update your contact" name="contact" value="{{user.contact}}" maxlength="10" oninput='this.value=this.value.replace(/[^0-9]/g, "")' pattern="^([789]([0-9]{9}))$" title='Mobile number(INDIAN) should contain exactly 10 digits starting with 7/8/9'>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Update your password" name="password" value="{{user.password}}" required="true" pattern=".{5,20}" title="password length should vary between 5-20" maxlength="20">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea type="text" class="form-control" rows="5" id="address" placeholder="Update your address" name="address"  required="true">{{user.address}}
+                    </textarea>
+                  </div>
+
+                  <!-- <div class="checkbox">
+                    <label><input type="checkbox" name="remember"> Remember me</label>
+                  </div> -->
+                  <input type="submit" class="btn btn-success btn-block" value="Save">
+                </form>
+            <!--FORM ENDS-->
+          </div>
+		    </div>
+		  </div>
+		</div>
+    <!--ROW ENDS-->
+</div>
+
+<script>
+	  var app = angular.module('hyperCrudApp', []);
+
+	  app.controller('usersCtrl', function($scope, $http) {
+        var userId = 0;
+
+        if(localStorage){
+          try {
+            userId = localStorage.getItem("userId")  //$userId is not supported as variable name
+            // alert(userId)
+          } catch(err) {
+              alert("Something unexpected happened, "+err)
+              return 
+          }
+        } else {
+          alert("No support of localStorage")
+          return
+        }
+        
+    	  $http.get("/api/users/"+userId).then(function (response) {
+    	  	  console.log(response.data)
+
+    	      $scope.user = response.data;
+    	  });
+
+        $scope.updateUser = function(){
+            event.preventDefault()
+
+            // alert(userId)
+
+            var data = {
+                    fullname: ""+document.forms["updateForm"]["fullname"].value.trim(),
+                    email: ""+document.forms["updateForm"]["email"].value.trim(),
+                    contact: ""+document.forms["updateForm"]["contact"].value.trim(),
+                    password: ""+document.forms["updateForm"]["password"].value.trim(),
+                    address: ""+document.forms["updateForm"]["address"].value.trim(),
+            }
+            console.log("DATA: ", data)
+              
+              $http({
+                url: "/api/users/"+userId, 
+                method: "PUT",
+                
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                  },
+
+                data: data
+              }).then(function(response){
+                  console.log(response)
+                  console.log(response.data)
+                  for(key in response.data){
+                    console.log(key, response[key])
+                  }
+                  if(response.status == 200){
+                      let answerYes = confirm(response.data.message+"\nDo you want to see update on home")
+                      if(answerYes){
+                        location.href = "/"
+                      }
+                  }
+              },
+                function(error){
+                  alert(error.message)
+                }
+              )
+          }
+	});
+</script>
+
+
+</body>
+</html>
+
+
