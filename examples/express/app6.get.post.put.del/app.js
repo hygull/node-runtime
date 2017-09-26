@@ -61,22 +61,6 @@ connection.query("SELECT * FROM users WHERE is_active=1;", function(err, data){
 //GET ALL DEACTIVATED USERS
 app.get(config.root+"/users/deactivated", function(request, response){
 	
-/*
-
-mysql> SELECT * FROM users;
-+----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
-| id | fullname         | email                      | contact    | address          | password   | created_at          | updated_at          | is_active | is_admin |
-+----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
-|  1 | Ryan Dahl        | ryan.dahl@gmail.com        | 7973134514 | Kondagaon, INDIA | ryan@321   | 2017-09-25 11:29:06 | 2017-09-25 15:23:55 |         1 |        0 |
-|  2 | Misko Hevery     | misko.heverygmail.com      | 7832017454 | Kanpur, INDIA    | misko@321  | 2017-09-25 11:29:06 | 2017-09-25 15:24:18 |         1 |        0 |
-|  3 | Robert Griesemer | robert.griesemer@gmail.com | 7877093454 | Gurgaon, INDIA   | robert@321 | 2017-09-25 11:29:06 | 2017-09-25 15:24:06 |         1 |        0 |
-|  4 | Ken Thompson     | ken.thompson@gmail.com     | 7977093114 | Hyderabad, INDIA | ken@321    | 2017-09-25 11:29:06 | 2017-09-25 15:24:27 |         1 |        0 |
-|  5 | Dennis Ritchie   | dennis.ritchie@gmail.com   | 7832092454 | Faridabad, INDIA | dennis@321 | 2017-09-25 11:29:06 | 2017-09-25 15:24:12 |         1 |        0 |
-+----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
-5 rows in set (0.00 sec)
-
-*/
-
 //Get all active users(JSON)
 connection.query("SELECT * FROM users WHERE is_active=0;", function(err, data){
 		if(err){
@@ -137,7 +121,7 @@ app.get("/", function(request, response){
 })
 
 //Rendering page to create new user
-app.get("/users/create", function(request, response){
+app.get("/register", function(request, response){
 	fs.readFile("./post_user.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
 		response.end(data)

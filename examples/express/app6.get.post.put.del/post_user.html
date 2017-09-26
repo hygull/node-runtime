@@ -80,34 +80,34 @@
                 <form action="" method="PUT" ng-submit="updateUser()" name="updateForm">
                   <div class="form-group">
                     <label for="fullname">Fullname</label>
-                    <input type="text" class="form-control" id="fullname" placeholder="Update your fullname" name="fullname" value="" required="true" autofocus="true" maxlength="50">
+                    <input type="text" class="form-control" id="fullname" placeholder="Type your fullname" name="fullname" value="" required="true" autofocus="true" maxlength="50">
                   </div>
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Update your email" name="email" value="" required="true">
+                    <input type="email" class="form-control" id="email" placeholder="Type your email" name="email" value="" required="true">
                   </div>
 
                   <div class="form-group">
                     <label for="contact">Contact</label>
-                    <input type="contact" class="form-control" id="contact" placeholder="Update your contact" name="contact" value="" maxlength="10" oninput='this.value=this.value.replace(/[^0-9]/g, "")' pattern="^([789]([0-9]{9}))$" title='Mobile number(INDIAN) should contain exactly 10 digits starting with 7/8/9'>
+                    <input type="contact" class="form-control" id="contact" placeholder="Type your contact 10 digit contact number" name="contact" value="" maxlength="10" oninput='this.value=this.value.replace(/[^0-9]/g, "")' pattern="^([789]([0-9]{9}))$" title='Mobile number(INDIAN) should contain exactly 10 digits starting with 7/8/9'>
                   </div>
 
                   <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Update your password" name="password" value="" required="true" pattern=".{5,20}" title="password length should vary between 5-20" maxlength="20">
+                    <input type="password" class="form-control" id="password" placeholder="Type your password" name="password" value="" required="true" pattern=".{5,20}" title="password length should vary between 5-20" maxlength="20">
                   </div>
 
                   <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea type="text" class="form-control" rows="5" id="address" placeholder="Update your address" name="address"  required="true">{{user.address}}
+                    <textarea  class="form-control" rows="5" id="address" placeholder="Type your address" name="address"  required="true">
                     </textarea>
                   </div>
 
                   <!-- <div class="checkbox">
                     <label><input type="checkbox" name="remember"> Remember me</label>
                   </div> -->
-                  <input type="submit" class="btn btn-success btn-block" value="Save">
+                  <input type="submit" class="btn btn-success btn-block" value="Register">
                 </form>
             <!--FORM ENDS-->
           </div>
