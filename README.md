@@ -23,6 +23,8 @@ Check [05_insert_multiple_data.js](./examples/mysql/05_insert_multiple_data.js) 
 
 # Express
 
+Now go to [./examples/express/app6.get.post.put.del](./examples/express/app6.get.post.put.del) then run **sh install.sh** just only first time.
+
 
 
 

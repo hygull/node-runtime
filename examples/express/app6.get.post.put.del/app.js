@@ -77,7 +77,7 @@ mysql> SELECT * FROM users;
 
 */
 
-//Get all active users
+//Get all active users(JSON)
 connection.query("SELECT * FROM users WHERE is_active=0;", function(err, data){
 		if(err){
 			response.writeHead(500, {"Content-Type": "application/json"})
@@ -89,7 +89,7 @@ connection.query("SELECT * FROM users WHERE is_active=0;", function(err, data){
 })
 
 
-
+//Get a particular user(JSON)
 app.get(config.root+"/users/:userId", function(request, response){
 	var  userId = request.params.userId
 	console.log(typeof userId)
@@ -112,7 +112,7 @@ app.get(config.root+"/users/:userId", function(request, response){
 	})
 })
 
-
+//Rendering update page for updating user details
 app.get("/users/update/:userId", function(request, response){
 	fs.readFile("./update_user.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
@@ -120,6 +120,7 @@ app.get("/users/update/:userId", function(request, response){
 	})
 })
 
+//Rendering page to show deactivated users
 app.get("/users/deactivated", function(request, response){
 	fs.readFile("./deactivated_users.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
@@ -127,6 +128,7 @@ app.get("/users/deactivated", function(request, response){
 	})
 })
 
+//Rendering Home page to show all users(activated)
 app.get("/", function(request, response){
 	fs.readFile("./home.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
@@ -134,6 +136,7 @@ app.get("/", function(request, response){
 	})
 })
 
+//Rendering page to create new user
 app.get("/users/create", function(request, response){
 	fs.readFile("./post_user.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
@@ -141,6 +144,7 @@ app.get("/users/create", function(request, response){
 	})
 })
 
+//Rendering page to confirm user deactivation 
 app.get("/users/delete/:userId", function(request, response){
 	fs.readFile("./delete_user.html", function(err, data){
 		response.writeHead(200, {"Content-Type": "text/html"})
@@ -150,9 +154,11 @@ app.get("/users/delete/:userId", function(request, response){
 
 
 // app.use(bodyParser.urlencoded({extended:true}))
+
 // for parsing application/json
 app.use(bodyParser.json()); 
 
+//Updating user (JSON) 
 app.put(config.root+"/users/:userId", function(request, response){
 	var  userId = request.params.userId
 
@@ -198,16 +204,16 @@ app.put(config.root+"/users/:userId", function(request, response){
 			// response.writeHead(200, {"Content-Type": "application/json"}) ...otherwise
 			// Can't set headers after they are sent
 			console.log("Query successfully executed")
+			response.status(200)
 			response.json({"status": 200, "message": "Details successfully updated"})
 		})
 	} else {
-		// response.writeHead(400, {"Content-Type": "application/json"}) ...otherwise
-		// Can't set headers after they are sent.
+		response.status(400)
 		response.json({"status": 400, "message": "Could not found data"})
 	}	
 })
 
-//Deleting users, I am not supposed to delete users just deactivate them
+//Deleting users, I am not supposed to delete users just deactivate them(JSON)
 app.delete(config.root + "/users/:userId", function(request, response){
 	var  userId = request.params.userId
 
@@ -236,7 +242,7 @@ app.delete(config.root + "/users/:userId", function(request, response){
 })
 
 
-//Deleting users, I am not supposed to delete users just deactivate them
+//Recovering users(JSON)
 app.put(config.root + "/users/recover/:userId", function(request, response){
 	var  userId = request.params.userId
 
@@ -264,7 +270,7 @@ app.put(config.root + "/users/recover/:userId", function(request, response){
 	})
 })
 
-//Posting users
+//Posting users(JSON)
 app.post(config.root+"/users/create", function(request, response){
 	var data = request.body
 	var totalKeys = Object.keys(data).length
@@ -305,19 +311,17 @@ app.post(config.root+"/users/create", function(request, response){
 				response.end(JSON.stringify({message: "Server Error", "status": 500}))
 				return
 			} 
-			// response.writeHead(200, {"Content-Type": "application/json"}) ...otherwise
-			// Can't set headers after they are sent
 			console.log("Query successfully executed")
+			response.status(200)
 			response.json({"status": 200, "message": "Details successfully updated"})
 		})
 	} else {
-		// response.writeHead(400, {"Content-Type": "application/json"}) ...otherwise
-		// Can't set headers after they are sent.
+		response.status(400)
 		response.json({"status": 400, "message": "Could not found data"})
 	}	
 })
 
-//Start Server 
+//Starting Server 
 var server = app.listen(port, function(){
 	console.log("Server is running " + port)
 })
