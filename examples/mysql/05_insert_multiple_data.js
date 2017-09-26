@@ -72,10 +72,11 @@ server = http.createServer(
 									console.log("Database creation successful(if it was not there) otherwise it got skipped")
 
 									var q = "CREATE TABLE IF NOT EXISTS users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, "+
-											"fullname VARCHAR(50) NOT NULL, email text NOT NULL, contact VARCHAR(10) NOT NULL, "+
+											"fullname VARCHAR(50) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE, contact VARCHAR(10) NOT NULL, "+
 											"address text DEFAULT NULL, password VARCHAR(20) NOT NULL, "+
 											"created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "+
-											"updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, is_active TINYINT(1) DEFAULT 1, is_admin TINYINT(1) DEFAULT 0);"
+											"updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "+
+											"is_active TINYINT(1) DEFAULT 1, is_admin TINYINT(1) DEFAULT 0);"
 
 									//Cretaing table 
 									connection.query(q, function(err){
@@ -133,3 +134,37 @@ server.listen(port)
 //Printing log messages
 console.log("Server started which is listening on port 8080")
 console.log("Visit at http://127.0.0.1:"+port)
+
+
+/*
+
+mysql> DESC `users`;
++------------+--------------+------+-----+-------------------+-----------------------------+
+| Field      | Type         | Null | Key | Default           | Extra                       |
++------------+--------------+------+-----+-------------------+-----------------------------+
+| id         | bigint(20)   | NO   | PRI | NULL              | auto_increment              |
+| fullname   | varchar(50)  | NO   |     | NULL              |                             |
+| email      | varchar(255) | NO   | UNI | NULL              |                             |
+| contact    | varchar(10)  | NO   |     | NULL              |                             |
+| address    | text         | YES  |     | NULL              |                             |
+| password   | varchar(20)  | NO   |     | NULL              |                             |
+| created_at | timestamp    | NO   |     | CURRENT_TIMESTAMP |                             |
+| updated_at | timestamp    | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
+| is_active  | tinyint(1)   | YES  |     | 1                 |                             |
+| is_admin   | tinyint(1)   | YES  |     | 0                 |                             |
++------------+--------------+------+-----+-------------------+-----------------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM `users`;
++----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
+| id | fullname         | email                      | contact    | address          | password   | created_at          | updated_at          | is_active | is_admin |
++----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
+|  1 | Ryan Dahl        | ryan.dahl@gmail.com        | 7973134514 | Kondagaon, INDIA | ryan@321   | 2017-09-26 11:51:04 | 2017-09-26 11:51:04 |         1 |        0 |
+|  2 | Misko Hevery     | misko.heverygmail.com      | 7832017454 | Kanpur, INDIA    | misko@321  | 2017-09-26 11:51:04 | 2017-09-26 11:51:04 |         1 |        0 |
+|  3 | Robert Griesemer | robert.griesemer@gmail.com | 7877093454 | Gurgaon, INDIA   | robert@321 | 2017-09-26 11:51:04 | 2017-09-26 11:51:04 |         1 |        0 |
+|  4 | Ken Thompson     | ken.thompson@gmail.com     | 7977093114 | Hyderabad, INDIA | ken@321    | 2017-09-26 11:51:04 | 2017-09-26 11:51:04 |         1 |        0 |
+|  5 | Dennis Ritchie   | dennis.ritchie@gmail.com   | 7832092454 | Faridabad, INDIA | dennis@321 | 2017-09-26 11:51:04 | 2017-09-26 11:51:04 |         1 |        0 |
++----+------------------+----------------------------+------------+------------------+------------+---------------------+---------------------+-----------+----------+
+5 rows in set (0.00 sec)
+
+*/
