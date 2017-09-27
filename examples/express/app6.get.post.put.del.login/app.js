@@ -314,6 +314,44 @@ app.post(config.root+"/users/create", function(request, response){
 	}	
 })
 
+
+//Login 
+app.post(config.root+"/login", function(request, response){
+	var data = request.body
+	console.log("GOT", data)
+	
+	if(data){
+		//Query preparation
+		let query =  "SELECT * FROM users WHERE email='"+data.email+ "' AND password='"+data.password+"';"
+
+		//Updating data into users table
+		connection.query(query, function(err, result){
+			if(err){
+				response.writeHead(500, {"Content-Type": "application/json"})
+				response.end(JSON.stringify({message: "Server Error", "status": 500}))
+				return
+			} 
+
+			console.log(result)
+			console.log("Query successfully executed")
+
+			if(result.length == 0){
+				console.log("Could not found the data")
+				response.status(200)
+				response.json({"status": 404, "message": "Please check your email/password"})
+			} else {
+				console.log("User found")
+				response.status(200)
+				response.json({"status": 200, "message": "Successfully logged in"})
+			}
+		})
+	} else {
+		response.status(400)
+		response.json({"status": 400, "message": "Could not found data"})
+	}	
+})
+
+
 //Starting Server 
 var server = app.listen(port, function(){
 	console.log("Server is running " + port)

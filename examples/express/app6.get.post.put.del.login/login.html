@@ -62,7 +62,9 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
 				<center>
-						<h1 id="header"> {{user.fullname}}</h1>
+						<h1 id="header"> Login now</h1>
+            <a href="/register/">Don't have account</a>
+
 				</center>
 			</div>
 		</div>
@@ -70,44 +72,33 @@
 		<div class="row" >
       <!--ITERATING USERS LIST-->
 		  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+        <hr>
 		    <div class="thumbnail">
 		      <center>
-		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - {{user.fullname}}" class="img-responsive img-circle" style="width: 100px" >
+		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - User" class="img-responsive img-circle" style="width: 100px" >
 		      	<hr>
 		      </center>
 		      <div class="caption" >
 		      	  <!--FORM STARTS-->
-                <form action="" method="PUT" ng-submit="updateUser()" name="updateForm">
-                  <div class="form-group">
-                    <label for="fullname">Fullname</label>
-                    <input type="text" class="form-control" id="fullname" placeholder="Type your fullname" name="fullname" value="" required="true" autofocus="true" maxlength="50">
-                  </div>
+                <form action="" method="POST" ng-submit="login()" name="loginForm">
 
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="Type your email" name="email" value="" required="true">
                   </div>
 
-                  <div class="form-group">
-                    <label for="contact">Contact</label>
-                    <input type="contact" class="form-control" id="contact" placeholder="Type your contact 10 digit contact number" name="contact" value="" maxlength="10" oninput='this.value=this.value.replace(/[^0-9]/g, "")' pattern="^([789]([0-9]{9}))$" title='Mobile number(INDIAN) should contain exactly 10 digits starting with 7/8/9'>
-                  </div>
-
+                  
                   <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Type your password" name="password" value="" required="true" pattern=".{5,20}" title="password length should vary between 5-20" maxlength="20">
                   </div>
 
-                  <div class="form-group">
-                    <label for="address">Address</label>
-                    <textarea  class="form-control" rows="5" id="address" placeholder="Type your address" name="address"  required="true">
-                    </textarea>
-                  </div>
-
-                  <!-- <div class="checkbox">
+                  <div class="checkbox">
                     <label><input type="checkbox" name="remember"> Remember me</label>
-                  </div> -->
+                  </div>
                   <input type="submit" class="btn btn-success btn-block" value="Register">
+                  <hr>
+                  
                 </form>
             <!--FORM ENDS-->
           </div>
@@ -121,22 +112,19 @@
 	  var app = angular.module('hyperCrudApp', []);
 
 	  app.controller('usersCtrl', function($scope, $http) {
-        $scope.updateUser = function(){
+        $scope.login = function(){
             event.preventDefault()
 
             // alert(userId)
 
             var data = {
-                    fullname: ""+document.forms["updateForm"]["fullname"].value.trim(),
-                    email: ""+document.forms["updateForm"]["email"].value.trim(),
-                    contact: ""+document.forms["updateForm"]["contact"].value.trim(),
-                    password: ""+document.forms["updateForm"]["password"].value.trim(),
-                    address: ""+document.forms["updateForm"]["address"].value.trim(),
+                    email: ""+document.forms["loginForm"]["email"].value.trim(),
+                    password: ""+document.forms["loginForm"]["password"].value.trim(),
             }
             console.log("DATA: ", data)
               
               $http({
-                url: "/api/users/create", 
+                url: "/api/login", 
                 method: "POST",
                 
                 headers: {
@@ -147,28 +135,29 @@
 
                 data: data
               }).then(function(response){
-                  console.log(response)
-                  console.log(response.data)
-                  for(key in response.data){
-                    console.log(key, response[key])
-                  }
-                  if(response.status == 200){
-                      let answerYes = confirm(response.data.message+"\nDo you want to see update on home")
+                  console.log("Response: ", response)
+
+                  console.log("Response data: ", response.data)
+
+
+                  if(response.data.status == 200){
+                      alert(response.data.message)
                       
-                        location.href = "/"
-                      
+                      location.href = "/"  
+                  } else {
+                    console.log("ELSE")
+                    alert(response.data.message)
+                    document.getElementById("loginForm").reset()
                   }
               },
                 function(error){
-                  alert(error.message)
+                  console.log("Error")
+                  console.log(error)
+                  alert(error)
                 }
               )
           }
 	});
 </script>
-
-
 </body>
 </html>
-
-
