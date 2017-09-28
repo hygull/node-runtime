@@ -1,0 +1,17 @@
+{
+  "name": "rest-api-test2",
+  "version": "1.0.0",
+  "description": "Rest Api Unit Testing",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Rishikesh Agrawani",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "request": "^2.83.0",
+    "should": "^13.1.0"
+  }
+}
