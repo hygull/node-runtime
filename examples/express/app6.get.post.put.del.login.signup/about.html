@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HyperCrud</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <style type="text/css">
+  		.who-we-are{
+  		    color: gray;
+          font-weight: bold;
+      }
+  </style>
+</head>
+<body>
+ 	<!-- NAVBAR STARTS -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">HyperCrud</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/qAlarm/details/">qAlarm &raquo;</a></li>
+                <li><a href="/YtEdit/details/">YtEdit &raquo;</a></li>
+                <li><a href="/GWeather/details/">GWeather &raquo;</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/WadStore/details/">WadStore &raquo;</a></li>
+                <li><a href="/chatsAll/details/">chatsAll &raquo;</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/login/">Login</a></li>
+            <li><a href="/register/">Register</a></li>
+            <li><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--NAVBAR ENDS-->
+<br>
+<br>
+
+<div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				  <center>
+						<h1 class="who-we-are">Who we are?</h1>
+              <p>
+                We are a team of 3 people specialized in the field of programming technologies.
+              </p>
+				  </center>
+
+          <center>
+            <h1 class="who-we-are">What we do?</h1>
+            <p>We work on Node.js, Python, Java and other front end technologies.</p>
+            <p>We also know to test the node.js applications.</p>
+          </center>
+
+          <center>
+            <h1 class="who-we-are">Members</h1>
+            <p>Arindita Saha</p>
+            <p>Kislaya Pant</p>
+            <p>Rishikesh Agrawani</p>
+          </center>
+			</div>
+		</div>
+</div>
+
+</body>
+</html>
