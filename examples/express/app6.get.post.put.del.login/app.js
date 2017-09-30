@@ -336,7 +336,7 @@ app.post(config.root+"/login", function(request, response){
 			console.log("Query successfully executed")
 
 			if(result.length == 0){
-				console.log("Could not found the data")
+				console.log("Could not found the user")
 				response.status(200)
 				response.json({"status": 404, "message": "Please check your email/password"})
 			} else {
