@@ -56,3 +56,11 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# .git, .git2 etc
+.git
+.git/*
+.git2
+.git2/*
+.DS_Store
+
