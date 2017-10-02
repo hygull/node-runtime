@@ -11,11 +11,11 @@
 
   <style type="text/css">
   		#header{
-  			color: green;
+  			color: red;
   			font-weight: bold;
   		}
-      #sub-header {
-        color: gray;
+      #server-error{
+        color: green;
         font-weight: bold;
       }
   </style>
@@ -46,7 +46,7 @@
                 <li><a href="/GWeather/details/">GWeather &raquo;</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="/WadStore/details/">WadStore &raquo;</a></li>
-                <li><a href="/chatsAll/details/">chatsAll &raquo;</a></li>
+                <li><a href="/chatsAll/details/">chatsAll</a></li>
               </ul>
             </li>
           </ul>
@@ -65,75 +65,27 @@
 <div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
-        <br>
 				<center>
-            <img src="https://www.alisteducation.com/wp-content/uploads/2012/06/delete.png" style="width:100px">
-						<h1 id="header"> Deactivate Now</h1>
-            
-            <h4 id="sub-header">Do you want to deactivate this user?</h4>
-            <h4 id="sub-header">You can recover this later</h4>
+						<h1 id="header">Error</h1>
 				</center>
 			</div>
 		</div>
 
 		<div class="row" >
       <!--ITERATING USERS LIST-->
-		  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-		        <button role="button" class="btn btn-danger btn-block" ng-click="deleteUser()">Confirm</button><br>
-            <a href="/" role="button" class="btn btn-info btn-block">Cancel</a>
+		  <div class="col-sm-6 col-md-4 col-xs-12" ng-repeat="user in users">
+		      <p id="server-error">Server side error, we will get back to you soon.</p>
 		  </div>
+
+      <div class="col-sm-6 col-md-4 col-xs-12">
+         <center>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/yqEP_iMejmg" frameborder="0" allowfullscreen></iframe>
+          </center>
+      </div>
 		</div>
     <!--ROW ENDS-->
 </div>
 
-<script>
-	  var app = angular.module('hyperCrudApp', []);
 
-	  app.controller('usersCtrl', function($scope, $http) {
-        var userId = 0;
-
-        if(localStorage){
-          try {
-            userId = localStorage.getItem("userId")  //$userId is not supported as variable name
-            // alert(userId)
-          } catch(err) {
-              alert("Something unexpected happened, "+err)
-              return 
-          }
-        } else {
-          alert("No support of localStorage")
-          return
-        }
-        
-        $scope.userId = userId
-
-        $scope.deleteUser = function(){
-            event.preventDefault()
-              
-              $http({
-                url: "/api/users/"+userId, 
-                method: "DELETE",
-                
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
-              }).then(
-                function(response){
-                  if(response.status == 200){
-                      confirm(response.data.message+"\nDo you want to see update on home");
-                      location.href = "/";                 }
-                },
-
-                function(error){
-                  alert(error.message)
-                }
-              )
-          }
-	});
-</script>
 </body>
 </html>
-
-

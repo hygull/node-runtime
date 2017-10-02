@@ -14,10 +14,6 @@
   			color: green;
   			font-weight: bold;
   		}
-      #sub-header {
-        color: gray;
-        font-weight: bold;
-      }
   </style>
 </head>
 <body>
@@ -35,7 +31,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li class="dropdown">
@@ -51,7 +47,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login/">Login</a></li>
+            <li class="active"><a href="/login/">Login</a></li>
             <li><a href="/register/">Register</a></li>
             <li><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
           </ul>
@@ -65,13 +61,10 @@
 <div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
-        <br>
 				<center>
-            <img src="https://www.alisteducation.com/wp-content/uploads/2012/06/delete.png" style="width:100px">
-						<h1 id="header"> Deactivate Now</h1>
-            
-            <h4 id="sub-header">Do you want to deactivate this user?</h4>
-            <h4 id="sub-header">You can recover this later</h4>
+						<h1 id="header"> Login now</h1>
+            <a href="/register/">Don't have account</a>
+
 				</center>
 			</div>
 		</div>
@@ -79,8 +72,37 @@
 		<div class="row" >
       <!--ITERATING USERS LIST-->
 		  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-		        <button role="button" class="btn btn-danger btn-block" ng-click="deleteUser()">Confirm</button><br>
-            <a href="/" role="button" class="btn btn-info btn-block">Cancel</a>
+        <hr>
+		    <div class="thumbnail">
+		      <center>
+		      	<img src="https://cdn2.iconfinder.com/data/icons/users-2/512/User_1-512.png" alt="Image - User" class="img-responsive img-circle" style="width: 100px" >
+		      	<hr>
+		      </center>
+		      <div class="caption" >
+		      	  <!--FORM STARTS-->
+                <form action="" method="POST" ng-submit="login()" name="loginForm" id="loginForm">
+
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Type your email" name="email" value="" required="true">
+                  </div>
+
+                  
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Type your password" name="password" value="" required="true" pattern=".{5,20}" title="password length should vary between 5-20" maxlength="20">
+                  </div>
+
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="remember"> Remember me</label>
+                  </div>
+                  <input type="submit" class="btn btn-success btn-block" value="Login">
+                  <hr>
+                  
+                </form>
+            <!--FORM ENDS-->
+          </div>
+		    </div>
 		  </div>
 		</div>
     <!--ROW ENDS-->
@@ -90,44 +112,48 @@
 	  var app = angular.module('hyperCrudApp', []);
 
 	  app.controller('usersCtrl', function($scope, $http) {
-        var userId = 0;
-
-        if(localStorage){
-          try {
-            userId = localStorage.getItem("userId")  //$userId is not supported as variable name
-            // alert(userId)
-          } catch(err) {
-              alert("Something unexpected happened, "+err)
-              return 
-          }
-        } else {
-          alert("No support of localStorage")
-          return
-        }
-        
-        $scope.userId = userId
-
-        $scope.deleteUser = function(){
+        $scope.login = function(){
             event.preventDefault()
+
+            // alert(userId)
+
+            var data = {
+                    email: ""+document.forms["loginForm"]["email"].value.trim(),
+                    password: ""+document.forms["loginForm"]["password"].value.trim(),
+            }
+            console.log("DATA: ", data)
               
               $http({
-                url: "/api/users/"+userId, 
-                method: "DELETE",
+                url: "/api/login", 
+                method: "POST",
                 
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                     "Access-Control-Allow-Origin": "*"
-                }
-              }).then(
-                function(response){
-                  if(response.status == 200){
-                      confirm(response.data.message+"\nDo you want to see update on home");
-                      location.href = "/";                 }
-                },
+                  },
 
+                data: data
+              }).then(function(response){
+                  console.log("Response: ", response)
+
+                  console.log("Response data: ", response.data)
+
+
+                  if(response.data.status == 200){
+                      alert(response.data.message)
+                      
+                      location.href = "/"  
+                  } else {
+                    console.log("ELSE")
+                    alert(response.data.message)
+                    document.getElementById("loginForm").reset()
+                  }
+              },
                 function(error){
-                  alert(error.message)
+                  console.log("Error")
+                  console.log(error)
+                  alert(error)
                 }
               )
           }
@@ -135,5 +161,3 @@
 </script>
 </body>
 </html>
-
-

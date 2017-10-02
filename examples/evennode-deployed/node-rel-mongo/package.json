@@ -1,0 +1,17 @@
+{
+  "name": "rel",
+  "version": "1.0.0",
+  "description": "An application with UI served by Node.js server",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "mongodb": "^2.2.31"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rishikesh Agrawani",
+  "license": "ISC"
+}

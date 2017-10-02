@@ -10,13 +10,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
   <style type="text/css">
-  		#header{
-  			color: green;
-  			font-weight: bold;
-  		}
-      #sub-header {
-        color: gray;
-        font-weight: bold;
+  		#who-we-are{
+  		    color: gray;
+          font-weight: bold;
       }
   </style>
 </head>
@@ -35,7 +31,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li class="dropdown">
@@ -53,7 +49,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/login/">Login</a></li>
             <li><a href="/register/">Register</a></li>
-            <li><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="/services/">Services<span class="sr-only">(current)</span></a></li>
           </ul>
         </div>
       </div>
@@ -65,75 +61,61 @@
 <div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
-        <br>
 				<center>
-            <img src="https://www.alisteducation.com/wp-content/uploads/2012/06/delete.png" style="width:100px">
-						<h1 id="header"> Deactivate Now</h1>
-            
-            <h4 id="sub-header">Do you want to deactivate this user?</h4>
-            <h4 id="sub-header">You can recover this later</h4>
+						<h1 id="who-we-are">Our services</h1>
 				</center>
 			</div>
 		</div>
-
-		<div class="row" >
-      <!--ITERATING USERS LIST-->
-		  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-		        <button role="button" class="btn btn-danger btn-block" ng-click="deleteUser()">Confirm</button><br>
-            <a href="/" role="button" class="btn btn-info btn-block">Cancel</a>
-		  </div>
-		</div>
-    <!--ROW ENDS-->
 </div>
 
 <script>
-	  var app = angular.module('hyperCrudApp', []);
+	// var app = angular.module('hyperCrudApp', []);
 
-	  app.controller('usersCtrl', function($scope, $http) {
-        var userId = 0;
+	// app.controller('usersCtrl', function($scope, $http) {
+	//   $http.get("/api/users/deactivated").then(function (response) {
+	//   	  console.log(response.data)
 
-        if(localStorage){
-          try {
-            userId = localStorage.getItem("userId")  //$userId is not supported as variable name
-            // alert(userId)
-          } catch(err) {
-              alert("Something unexpected happened, "+err)
-              return 
-          }
-        } else {
-          alert("No support of localStorage")
-          return
-        }
-        
-        $scope.userId = userId
+	//       $scope.users = response.data;
+ //        if($scope.users.length == 0){
+ //            document.getElementById("sub-header").style.display = "block";
+ //            document.getElementById("nousers-image").style.display = "block";
+ //            document.getElementById("header").style.display = "none";
+ //        }
 
-        $scope.deleteUser = function(){
-            event.preventDefault()
-              
-              $http({
-                url: "/api/users/"+userId, 
-                method: "DELETE",
+ //        $scope.setKey = function (userId){
+ //            // alert(userId)
+ //            if(localStorage){
+ //              localStorage.setItem("userId", userId)
+ //            } else {
+ //              alert("No support of localStorage")
+ //              return
+ //            }
+ //        }//function closed 
+
+ //        $scope.recoverUser = function(userId){
+ //              $http({
+ //                url: "/api/users/recover/"+userId, 
+ //                method: "PUT",
                 
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
-              }).then(
-                function(response){
-                  if(response.status == 200){
-                      confirm(response.data.message+"\nDo you want to see update on home");
-                      location.href = "/";                 }
-                },
+ //                headers: {
+ //                    "Content-Type": "application/json",
+ //                    "Accept": "application/json",
+ //                    "Access-Control-Allow-Origin": "*"
+ //                }
+ //              }).then(
+ //                function(response){
+ //                  if(response.status == 200){
+ //                      alert(response.data.message);
+ //                      location.href = "/";                 }
+ //                },
 
-                function(error){
-                  alert(error.message)
-                }
-              )
-          }
-	});
+ //                function(error){
+ //                  alert(error.message)
+ //                }
+ //              )
+ //        } 
+	//   });
+	// });
 </script>
 </body>
 </html>
-
-

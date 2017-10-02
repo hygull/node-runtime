@@ -111,13 +111,19 @@
             event.preventDefault()
               
               $http({
-                url: "/api/users/"+userId, 
+                url: "/api/users/", 
                 method: "DELETE",
                 
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                     "Access-Control-Allow-Origin": "*"
+                },
+                data: {
+                  _id: userId,
+                  update_data: {
+                    is_active: false
+                  }
                 }
               }).then(
                 function(response){
