@@ -92,7 +92,7 @@
 
                   <div class="form-group">
                     <label for="contact">Contact</label>
-                    <input type="contact" class="form-control" id="contact" placeholder="Type your contact 10 digit contact number" name="contact" value="" maxlength="10" oninput='this.value=this.value.replace(/[^0-9]/g, "")' pattern="^([789]([0-9]{9}))$" title='Mobile number(INDIAN) should contain exactly 10 digits starting with 7/8/9'>
+                    <input type="contact" class="form-control" id="contact" placeholder="Type your contact 10 digit contact number" name="contact" value="" maxlength="10" oninput='this.value=this.value.replace(/[^0-9]/g, "")' pattern="^([789]([0-9]{9}))$" title='Mobile number(INDIAN) should contain exactly 10 digits starting with 7/8/9' required="true">
                   </div>
 
                   <div class="form-group">
@@ -134,6 +134,8 @@
                     contact: ""+document.forms["updateForm"]["contact"].value.trim(),
                     password: ""+document.forms["updateForm"]["password"].value.trim(),
                     address: ""+document.forms["updateForm"]["address"].value.trim(),
+                    is_admin: false,
+                    is_active: true
             }
             console.log("DATA: ", data)
               
@@ -155,12 +157,13 @@
                     console.log(key, response[key])
                   }
                   if(response.status == 200){
-                      let answerYes = confirm(response.data.message+"\nDo you want to see update on home")
+                      let answerYes = confirm(response.data.message+"\nDo you want to see update on home");
                       
-                        location.href = "/"
+                        location.href = "/";
                       
                   } else {
-                    alert(response.data.message)
+                    alert(response.data.message);
+                    return;
                   }
               },
                 function(error){

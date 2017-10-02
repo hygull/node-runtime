@@ -14,6 +14,12 @@
   		    color: gray;
           font-weight: bold;
       }
+      .box{
+        box-shadow: 1px 0px 0px gray;
+      }
+      .img-responsive{
+        height: 200px;
+      }
   </style>
 </head>
 <body>
@@ -58,64 +64,59 @@
 <br>
 <br>
 
-<div ng-app="hyperCrudApp" ng-controller="usersCtrl" class="container">
+<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12">
 				<center>
-						<h1 id="who-we-are">Our services</h1>
+						<h1 id="who-we-are">Articles</h1>
 				</center>
 			</div>
 		</div>
+    <div class="row">
+      
+          
+      <div class="col-xs-12 col-md-3 col-sm-4 col-lg-3 box" >
+          <img src="/tiger.jpg" class="img-responsive" width="100%">
+          <hr>
+          <center>
+            <p><b>Tiger</b> - It is our responsiblity to help government in growing population of tigers</p>
+          </center>
+          <hr>
+      </div>
+
+      <div class="col-xs-12 col-md-3 col-sm-4 col-lg-3 box" >
+          <img src="http://hdlatestwallpaper.com/wp-content/uploads/2017/06/Scenery-Drawing-HD-wallpaper.jpg" class="img-responsive" width="100%">
+          <hr>
+          <center>
+            <p><b>Silency</b> - Fresh, silent and beautiful home near forest.</p>
+          </center>
+          <hr>
+      </div>
+      <div class="col-xs-12 col-md-3 col-sm-4 col-lg-3 box" >
+          <img src="https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/1296x728_BODY_13_Health_Benefits_of_Beetroot_Juice-lowerbloodpressure.jpg" class="img-responsive" width="100%">
+          <hr>
+          <center>
+            <p><b>Beetroot</b> - A rich source of Vitamin C, magnesium, manganese & phosphorus</p>
+            <a href="http://food.ndtv.com/food-drinks/benefits-of-beetroot-in-the-pink-of-health-1237538">Read more in english</a>, <a href="http://www.myupchar.com/tips/chukandar-ke-fayde-aur-nuksan-in-hindi/">Great tips in hindi</a>
+          </center>
+          <hr>
+      </div>
+      <div class="col-xs-12 col-md-3 col-sm-4 col-lg-3 box" >
+
+          <img src="http://media.npr.org/assets/img/2012/04/03/carrotmain1_wide-4aca9b1fbdcc432e640feda4a79369e8946c8bb5-s900-c85.jpg" class="img-responsive" width="100%">
+          <hr>
+          <center>
+            <p><b>Carrot</b> - A rich source of Vitamin A, Iron and many more. Good for eyes.</p>
+            <a href="http://www.stylecraze.com/articles/benefits-of-carrots-for-skin-hair-and-health/">Read more in english</a>,
+            <a href="http://www.myupchar.com/tips/gajar-ke-fayde-aur-nuksan-in-hindi/">Also see nice tips in hindi</a>
+          </center>
+          <hr>
+      </div>
+    </div>
 </div>
 
 <script>
-	// var app = angular.module('hyperCrudApp', []);
 
-	// app.controller('usersCtrl', function($scope, $http) {
-	//   $http.get("/api/users/deactivated").then(function (response) {
-	//   	  console.log(response.data)
-
-	//       $scope.users = response.data;
- //        if($scope.users.length == 0){
- //            document.getElementById("sub-header").style.display = "block";
- //            document.getElementById("nousers-image").style.display = "block";
- //            document.getElementById("header").style.display = "none";
- //        }
-
- //        $scope.setKey = function (userId){
- //            // alert(userId)
- //            if(localStorage){
- //              localStorage.setItem("userId", userId)
- //            } else {
- //              alert("No support of localStorage")
- //              return
- //            }
- //        }//function closed 
-
- //        $scope.recoverUser = function(userId){
- //              $http({
- //                url: "/api/users/recover/"+userId, 
- //                method: "PUT",
-                
- //                headers: {
- //                    "Content-Type": "application/json",
- //                    "Accept": "application/json",
- //                    "Access-Control-Allow-Origin": "*"
- //                }
- //              }).then(
- //                function(response){
- //                  if(response.status == 200){
- //                      alert(response.data.message);
- //                      location.href = "/";                 }
- //                },
-
- //                function(error){
- //                  alert(error.message)
- //                }
- //              )
- //        } 
-	//   });
-	// });
 </script>
 </body>
 </html>

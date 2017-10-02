@@ -155,7 +155,8 @@
                       password: ""+document.forms["updateForm"]["password"].value.trim(),
                       address: ""+document.forms["updateForm"]["address"].value.trim(),
                     }
-              }
+            }
+            
             console.log("DATA: ", data)
               
               $http({
@@ -167,7 +168,6 @@
                     "Accept": "application/json",
                     "Access-Control-Allow-Origin": "*"
                   },
-
                 data: data
               }).then(function(response){
                   console.log(response)

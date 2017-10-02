@@ -22,6 +22,9 @@ var mongoDbPassword = "rishikesh321"
 // for parsing application/json
 app.use(bodyParser.json()); 
 
+//To serve static files like images/javascript/css
+app.use(express.static("public"))
+
 //Rendering home page
 app.get("/", function(request, response){
 	fs.readFile("./home.html", function(err, data){
@@ -185,7 +188,7 @@ app.put("/api/users/", function(request, response){
 	try{
 		if(data){
 			var searchObj = { _id: ObjectId(data._id) };
-			var updateData = data.update_data;
+			var updateData = {$set: data.update_data};
 
 			MongoClient.connect("mongodb://" + config.mongo.user + ":" + mongoDbPassword + "@" + config.mongo.hostString,
 				function(err, db){
@@ -458,6 +461,7 @@ app.get("/create/collection/", function(request, response){
 			})
 })
 
+//Making Server To Listen On The Defined Port
 try{
 	app.listen(process.env.PORT )
 } catch(err) {
