@@ -414,6 +414,48 @@ app.put( "/api/users/recover/one", function(request, response){
 	}
 })
 
+//Login 
+app.post("/api/login", function(request, response){
+	var data = request.body
+	console.log("GOT(LOGIN) DATA : ", data)
+	
+	if(data){
+		MongoClient.connect("mongodb://" + config.mongo.user + ":" + mongoDbPassword + "@" + config.mongo.hostString,
+					function(err, db){
+						if(err){
+							//Rendering Error page while database connection problem
+							fs.readFile("./error.html", function(err, data){
+								response.writeHead(200, {"Content-Type": "text/html"})
+								response.end(data)
+							})
+						} else {
+							db.collection("users").find( data).toArray(function(err, result){
+								console.log("LOGIN, DB RESULT : " ,result)
+
+								if(err) {
+									response.status(500)
+									response.json({message: "Server Error", status: 500})
+								} else {
+									if(result.length != 0) {
+										response.status(200)
+										response.json({message: "Successfully logged in", status: 200})
+									} else {
+										response.status(200)
+										response.json({message: "Email or password is incorrect", status: 400})
+									}
+								}
+							})
+						}
+					})
+	} else {
+		//Rendering Error page while database connection problem
+		fs.readFile("./error.html", function(err, data){
+			response.writeHead(200, {"Content-Type": "text/html"})
+			response.end(data)
+		})
+	}
+})
+
 //To drop and create new collection
 app.get("/create/collection/", function(request, response){
 	//Connecting to database
